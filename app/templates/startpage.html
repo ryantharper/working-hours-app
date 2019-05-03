@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+  <h1>Please Login</h1>
+
+  {% for row in hoursDb %}
+    <p>{{ row.date }}</p><br>
+  {% endfor %}
+
+{% endblock %}

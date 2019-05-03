@@ -1,0 +1,13 @@
+.fixedHeader {
+    height:45vh;
+    overflow-y:auto;
+}
+
+.fixedHeader th {
+  position: sticky;
+  top: 0;
+}
+
+table  { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 16px; }
+th     { background:#eee; z-index: 1;}
