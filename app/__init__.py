@@ -27,7 +27,7 @@ def create_app(config_class=Config):
     app.config.from_object(Config) # read and apply config terms
 
     db.init_app(app)
-    migrate.init_app(app)
+    migrate.init_app(app, db)
     login.init_app(app)
     bootstrap.init_app(app)
     moment.init_app(app)
