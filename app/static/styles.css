@@ -11,3 +11,7 @@
 table  { border-collapse: collapse; width: 100%; }
 th, td { padding: 8px 16px; }
 th     { background:#eee; z-index: 1;}
+
+.container{
+  width:85vw;
+}

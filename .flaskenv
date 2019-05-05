@@ -1,1 +1,1 @@
-FLASK_APP=wagesapp.py
+FLASK_APP=mainapp.py

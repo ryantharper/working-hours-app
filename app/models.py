@@ -29,6 +29,22 @@ class Work(db.Model):
     start_time = db.Column(db.DateTime)
     end_time = db.Column(db.DateTime)
     driving_hours = db.Column(db.DateTime)
+    breaks = db.Column(db.String) # OFFICIAL BREAK. 0,15,30,45mins
+    other_work = db.Column(db.DateTime)
+    poa = db.Column(db.DateTime)
+    total_rest = db.Column(db.DateTime) # may have some calculations if end_of_shift true 
+
+    end_of_week = db.Column(db.Boolean)
+    # if TRUE, end of week --> when next data entered (start of next week) --> calculate WEEKLY REST
+
+    end_of_shift = db.Column(db.Boolean) # TRUE if data is taken straight from end of shift print out
+    # if TRUE --> calculates difference(ENDTIME,MIDNIGHT[00:00]) (R2)
+                # then adds it to R1 difference(MIDNIGHT, START)
+
+    # if FALSE --> total rest MINUS difference(midnight,start) MINUS difference(end,midnight) MINUS officialbreak
+                    # this == break OVER official break; 0,15,30,45mins
+
+
     week_beginning = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
