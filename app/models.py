@@ -29,7 +29,7 @@ class Work(db.Model):
     start_time = db.Column(db.DateTime)
     end_time = db.Column(db.DateTime)
     driving_hours = db.Column(db.DateTime)
-    breaks = db.Column(db.String) # OFFICIAL BREAK. 0,15,30,45mins
+    breaks = db.Column(db.String(64)) # OFFICIAL BREAK. 0,15,30,45mins
     other_work = db.Column(db.DateTime)
     poa = db.Column(db.DateTime)
     total_rest = db.Column(db.DateTime) # may have some calculations if end_of_shift true 

@@ -1,0 +1,114 @@
+2019-05-05 17:27:52,165 INFO: Wages app startup [in /Users/ryan/wagesapptest/app/__init__.py:56]
+2019-05-05 17:30:01,392 INFO: Wages app startup [in /Users/ryan/wagesapptest/app/__init__.py:56]
+2019-05-05 17:30:11,734 ERROR: Exception on /auth/login [GET] [in /Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/ryan/wagesapptest/app/auth/routes.py", line 31, in login
+    return render_template('login.html', title='Sign In', form=form)
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/ryan/wagesapptest/app/templates/login.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "/Users/ryan/wagesapptest/app/templates/base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
+    {%- block html %}
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 6, in block "html"
+    {%- block head %}
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 13, in block "head"
+    {%- block styles %}
+  File "/Users/ryan/wagesapptest/app/templates/base.html", line 11, in block "styles"
+    <link rel="stylesheet" href="{{ url_for('.static', filename='styles.css') }}">
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/helpers.py", line 356, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/app.py", line 2061, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/flask/helpers.py", line 345, in url_for
+    force_external=external)
+  File "/Users/ryan/wagesapp/venv/lib/python3.7/site-packages/werkzeug/routing.py", line 2181, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'auth.static' with values ['filename']. Did you mean 'static' instead?
+2019-05-05 19:48:32,644 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 19:55:04,830 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 19:56:48,451 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 19:58:19,182 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 19:59:15,320 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 20:02:51,223 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 20:06:29,290 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 20:09:16,148 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 20:12:37,677 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 20:14:20,274 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 20:15:45,275 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 20:19:29,372 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 20:21:59,735 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 20:23:01,019 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 20:24:02,679 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 22:16:34,731 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 22:22:58,558 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 22:45:24,678 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 23:19:42,976 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 23:43:28,899 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-05 23:46:01,672 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 00:37:34,817 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 03:57:03,546 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 04:25:31,813 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 10:28:04,152 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 10:28:04,165 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 10:28:04,259 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 10:34:01,354 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 10:34:01,743 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 10:34:01,815 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:11:49,235 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:11:49,996 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:11:50,026 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:16:21,353 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:16:22,460 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:16:22,669 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:22:48,526 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:22:48,555 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:22:48,718 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:28:23,409 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:28:23,511 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:28:23,567 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:31:17,053 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:31:17,077 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 11:31:17,196 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 12:02:45,509 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 12:03:58,327 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 12:03:58,449 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 12:14:53,859 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 12:14:53,907 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 12:14:54,034 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 13:10:11,763 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 13:10:11,899 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 13:10:11,950 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 13:28:17,776 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 13:28:17,972 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 13:28:18,289 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 13:35:01,590 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
+2019-05-06 13:35:01,773 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
