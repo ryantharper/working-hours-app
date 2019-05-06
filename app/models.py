@@ -32,7 +32,7 @@ class Work(db.Model):
     breaks = db.Column(db.String(64)) # OFFICIAL BREAK. 0,15,30,45mins
     other_work = db.Column(db.DateTime)
     poa = db.Column(db.DateTime)
-    total_rest = db.Column(db.DateTime) # may have some calculations if end_of_shift true 
+    total_rest = db.Column(db.DateTime) # may have some calculations if end_of_shift true
 
     end_of_week = db.Column(db.Boolean)
     # if TRUE, end of week --> when next data entered (start of next week) --> calculate WEEKLY REST

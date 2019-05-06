@@ -10,7 +10,6 @@ from flask_bootstrap import Bootstrap
 from config import Config
 
 
-
 # create database and db migration instances
 db = SQLAlchemy() # db engine
 migrate = Migrate() # migration engine
