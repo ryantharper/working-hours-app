@@ -15,7 +15,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     #SERVER_NAME = "127.0.0.1:8000"
     TEMPLATES_AUTO_RELOAD = True
-    APPLICATION_ROOT = "/work"
+    
     '''
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
