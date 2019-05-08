@@ -277,7 +277,7 @@ def weeklySum2(listHours):
 
         return dct_hours, dct_overtime, weeks, dct_drivingPlusOther, dct_poa, dct_breaksAfterOB, dct_driving, dct_other
     else: # when new user or no data
-        return 0,0,[],0,0,0
+        return 0,0,[],0,0,0,0,0
 
 def getCumul(week_Begin, listHours):
     if listHours != []:
