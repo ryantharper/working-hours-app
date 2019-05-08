@@ -283,14 +283,17 @@ def getCumul(week_Begin, listHours):
     if listHours != []:
         dct_hours, dct_overtime, wks, dct_drivingPlusOther, dct_poa, dct_breaksAfterOB, dct_driving, dct_other = weeklySum2(listHours)
         if isinstance(week_Begin, str):
-            cumul_hrs = strfdelta(dct_hours[datetime.fromisoformat(week_Begin)], '%H:%M')
-            cumul_overtime = strfdelta(dct_overtime[datetime.fromisoformat(week_Begin)], '%H:%M')
-            cumul_drivingPlusOther = strfdelta(dct_drivingPlusOther[datetime.fromisoformat(week_Begin)], '%H:%M')
-            cumul_poa = strfdelta(dct_poa[datetime.fromisoformat(week_Begin)], '%H:%M')
-            cumul_breaksAfterOB = strfdelta(dct_breaksAfterOB[datetime.fromisoformat(week_Begin)], '%H:%M')
-            cumul_driving = strfdelta(dct_driving[datetime.fromisoformat(week_Begin)], '%H:%M')
-            cumul_other = strfdelta(dct_other[datetime.fromisoformat(week_Begin)], '%H:%M')
-            return cumul_hrs, cumul_overtime, datetime.fromisoformat(week_Begin), cumul_drivingPlusOther, cumul_poa, cumul_breaksAfterOB, cumul_driving, cumul_other
+            print('GET CUMUL WEEK BEGIN')
+            print(week_Begin)
+            print(type(week_Begin))
+            cumul_hrs = strfdelta(dct_hours[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
+            cumul_overtime = strfdelta(dct_overtime[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
+            cumul_drivingPlusOther = strfdelta(dct_drivingPlusOther[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
+            cumul_poa = strfdelta(dct_poa[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
+            cumul_breaksAfterOB = strfdelta(dct_breaksAfterOB[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
+            cumul_driving = strfdelta(dct_driving[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
+            cumul_other = strfdelta(dct_other[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
+            return cumul_hrs, cumul_overtime, datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S'), cumul_drivingPlusOther, cumul_poa, cumul_breaksAfterOB, cumul_driving, cumul_other
         else:
             cumul_hrs = strfdelta(dct_hours[week_Begin.replace(hour=0, minute=0, second=0, microsecond=0)], '%H:%M')
             cumul_overtime = strfdelta(dct_overtime[week_Begin.replace(hour=0, minute=0, second=0, microsecond=0)], '%H:%M')
@@ -301,7 +304,7 @@ def getCumul(week_Begin, listHours):
             cumul_other = strfdelta(dct_other[week_Begin.replace(hour=0, minute=0, second=0, microsecond=0)], '%H:%M')
             return cumul_hrs, cumul_overtime, week_Begin, cumul_drivingPlusOther, cumul_poa, cumul_breaksAfterOB, cumul_driving, cumul_other
     else:
-        return 0,0,0,0,0,0,0,0
+        return 0,0,0,0,0,0,0
 
 
 
