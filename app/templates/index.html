@@ -11,7 +11,8 @@
       {{ wtf.quick_form(form) }}
       <br>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-8">
+      <p>{{ hoursDb[1] }}</p>
       <p>table is scrollable (horizontally and vertically)</p>
       <p><a href="{{ url_for('main.download_data') }}">Download as Excel</a></p>
       <div class="panel panel-default table-responsive fixedHeader">
@@ -22,31 +23,35 @@
             <th>Date</th>
             <th>Start</th>
             <th>End</th>
-            <th>Hrs:Mins<br>worked</th>
-            <th>Hrs:Mins Worked <br>- 45 mins</th>
+            <th>Hrs:Mins worked</th>
+            <th>Official Break (OB)</th>
+            <th>HH:MM worked minus OB</th>
+            <th>Other Breaks</th>
             <th>Overtime</th>
             <th>Driving Hrs</th>
-            <th>Official Break</th>
             <th>Other Work</th>
             <th>POA</th>
-            <th>Total Rest</th>
+            <th>Total Breaks</th>
+            <th>Rest Completed</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {% for row in hoursDb %}
             <tr>
-              <td>{{ row[0] }}</td>
-              <td>{{ row[1] }}</td>
-              <td>{{ row[2] }}</td>
-              <td>{{ row[3] }}</td>
-              <td>{{ row[4] }}</td>
-              <td>{{ row[5] }}</td>
-              <td>{{ row[6] }}</td>
-              <td>{{ row[9] }}</td>
-              <td>{{ row[10] }}</td>
-              <td>{{ row[11] }}</td>
-              <td>{{ row[12] }}</td>
+              <td>{{ row[0] }}</td> <!--Date-->
+              <td>{{ row[1] }}</td> <!--Start Time-->
+              <td>{{ row[2] }}</td> <!--End Time-->
+              <td>{{ row[3] }}</td> <!--Hrs:Mins worked-->
+              <td>{{ row[9] }}</td> <!--Official Break-->
+              <td>{{ row[4] }}</td> <!--Hrs:Mins worked MINUS official break-->
+              <td>{{ row[14] }}</td> <!--Break AFTER OB-->
+              <td>{{ row[5] }}</td> <!--Overtime-->
+              <td>{{ row[6] }}</td> <!--Driving Hrs-->
+              <td>{{ row[10] }}</td> <!--Other Work-->
+              <td>{{ row[11] }}</td> <!--POA-->
+              <td>{{ row[12] }}</td> <!--Total Breaks-->
+              <td>{{ row[16] }}</td> <!--Daily Rest Completed-->
               <td>
                 <form action="" method="post" onsubmit="return confirm('Do you really want to delete?');">
                   <button type="submit" class="btn btn-default" name="delete" value="{{ row[7] }}">
@@ -61,7 +66,7 @@
       </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title">
@@ -80,8 +85,12 @@
         <div class="panel-body">
           {% if cumul_hrs is not none %}
           <p>Week Beginning:<br> <b>{{ week }}</b></p>
-          <p> Selected Week Cumulative Working Hours:<br><b>{{ cumul_hrs[0:2] }} hours, {{ cumul_hrs[3:5] }} minutes</b></p>
-          <p> Selected Week Cumulative Overtime Hours:<br><b>{{ cumul_overtime[0:2] }} hours, {{ cumul_overtime[3:5] }} minutes</b></p>
+          <p> Cumulative Working Hours:<br><b>{{ cumul_hrs[0:2] }} hours, {{ cumul_hrs[3:5] }} minutes</b></p>
+          <p> Cumulative Overtime Hours:<br><b>{{ cumul_overtime[0:2] }} hours, {{ cumul_overtime[3:5] }} minutes</b></p>
+          <p> Cumulative POA:<br><b>{{ cumul_poa[0:2] }} hours, {{ cumul_poa[3:5] }} minutes</b></p>
+          <p> Cumulative Breaks After Official Break:<br><b>{{ cumul_breaksAfterOB[0:2] }} hours, {{ cumul_breaksAfterOB[3:5] }} minutes</b></p>
+          <p> Cumulative Driving Hours:<br><b>{{ cumul_driving[0:2] }} hours, {{ cumul_driving[3:5] }} minutes</b></p>
+          <p> Cumulative Other Work Hours:<br><b>{{ cumul_other[0:2] }} hours, {{ cumul_other[3:5] }} minutes</b></p>
           {% else %}
           <p><b>Select a week to see cumulatives</b></p>
           {% endif %}

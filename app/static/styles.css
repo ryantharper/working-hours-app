@@ -13,5 +13,9 @@ th, td { padding: 8px 16px; }
 th     { background:#eee; z-index: 1;}
 
 .container{
-  width:85vw;
+  width:95vw;
+}
+
+.cumul_panel {
+  width:10vw;
 }

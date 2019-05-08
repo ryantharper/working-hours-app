@@ -37,12 +37,11 @@ class Work(db.Model):
     end_of_week = db.Column(db.Boolean)
     # if TRUE, end of week --> when next data entered (start of next week) --> calculate WEEKLY REST
 
-    end_of_shift = db.Column(db.Boolean) # TRUE if data is taken straight from end of shift print out
-    # if TRUE --> calculates difference(ENDTIME,MIDNIGHT[00:00]) (R2)
-                # then adds it to R1 difference(MIDNIGHT, START)
+    start_of_week = db.Column(db.Boolean)
 
-    # if FALSE --> total rest MINUS difference(midnight,start) MINUS difference(end,midnight) MINUS officialbreak
-                    # this == break OVER official break; 0,15,30,45mins
+    end_of_shift = db.Column(db.Boolean) # TRUE if data is taken straight from end of shift print out
+
+    utc_plusone = db.Column(db.Boolean) # TICKED/TRUE IF DATA IS UTC +1
 
 
     week_beginning = db.Column(db.DateTime)

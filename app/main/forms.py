@@ -37,13 +37,16 @@ class HoursForm(FlaskForm):
     poa = TimeField(label='POA', id='timepick6', validators=[OptionalIf('holiday_sick')])
 
     # total rest, see models.py for details
-    total_rest = TimeField(label='Total Rest', id='timepick6', validators=[OptionalIf('holiday_sick')])
+    total_rest = TimeField(label='Total Rest', id='timepick7', validators=[OptionalIf('holiday_sick')])
 
+    start_of_week = BooleanField('Start of Week?', id="startweek", validators=[OptionalIf('holiday_sick')])
     # see what happens if FRIDAY or THURS/FRI is HOLIDAY/SICK, how does that account for WEEKLY REST
     end_of_week = BooleanField('End of Week?', id="endweek", validators=[OptionalIf('holiday_sick')])
 
 
-    end_of_shift = BooleanField("Data taken from Today's shift?", id="timepick7", validators=[OptionalIf('holiday_sick')]) # see models.py for details
+
+    end_of_shift = BooleanField("Data taken from Today's shift?", id="timepick8", validators=[OptionalIf('holiday_sick')]) # see models.py for details
+    utc_plusone = BooleanField("Is this data in UTC+1?", id="timepick9", validators=[OptionalIf('holiday_sick')])
     submit = SubmitField('Submit')
 
     def validate_dateEntry(self, dateEntry):
