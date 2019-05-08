@@ -312,8 +312,8 @@ def getCumul(week_Begin, listHours):
 @bp.route('/start')
 def start():
     # TESTING: DELETE WORK DB ROWS
-    db.session.query(Work).delete()
-    db.session.commit()
+    #db.session.query(Work).delete()
+    #db.session.commit()
 
     return render_template('startpage.html')
 
