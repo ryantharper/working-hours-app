@@ -138,7 +138,9 @@ def listDates(id):
             # this gets the DAY of the date
             day = datetime.strptime(row[0].isoformat(), '%Y-%m-%d').strftime("%A")
             if day == 'Saturday' or day == 'Sunday':
-                if row[0]!=date(2019,3,30):
+                if row[0]==date(2019,3,30):
+                    pass
+            else:
                     overtime = hrsWorked
                     hrsWorked, hrsWorkedSubbed = '0:00', '0:00' # would be just 0 but are 0:00 to allow for [:-3] das
 
@@ -174,6 +176,7 @@ def getWeeklySum(listHours):
     # adds up work hours
     for x in cumuls:
         if x[4] is not int(): # handles if holiday/sick
+            print(x[4])
             (h, m) = x[4].split(':')
             d = timedelta(hours=int(h), minutes=int(m))
             sumHours += d

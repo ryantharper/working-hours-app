@@ -1,7 +1,0 @@
-env/
-certs/
-__pycache__/
-
-app.db
-*.py[cod]
-*.log

@@ -1,73 +1,42 @@
-2019-05-06 13:35:01,942 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
-2019-05-06 13:43:27,314 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
-2019-05-06 13:43:27,901 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
-2019-05-06 13:43:27,988 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
-2019-05-06 13:47:43,228 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
-2019-05-06 13:47:43,288 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
-2019-05-06 13:47:43,346 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
-2019-05-06 14:10:30,881 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
-2019-05-06 14:10:31,126 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
-2019-05-06 14:10:31,193 INFO: Wages app startup [in /home/ryan/working-hours-app/app/__init__.py:55]
-2019-05-06 17:48:06,562 ERROR: Exception on /index [POST] [in /home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py:1761]
+2019-05-10 16:41:02,321 ERROR: Exception on /work/index [GET] [in /home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 2292, in wsgi_app
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1815, in full_dispatch_request
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py", line 1815, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1718, in handle_user_exception
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py", line 1718, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/_compat.py", line 35, in reraise
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/_compat.py", line 35, in reraise
     raise value
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1813, in full_dispatch_request
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1799, in dispatch_request
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py", line 1799, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask_login/utils.py", line 261, in decorated_view
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/ryan/working-hours-app/app/main/routes.py", line 233, in index
-    cumul_hrs, cumul_overtime, week_Begin_dt = getCumul(week_Begin, listHours)
-  File "/home/ryan/working-hours-app/app/main/routes.py", line 151, in getCumul
-    cumul_hrs = strfdelta(dct_hours[datetime.fromisoformat(week_Begin)], '%H:%M')
-AttributeError: type object 'datetime.datetime' has no attribute 'fromisoformat'
-2019-05-06 17:48:43,361 ERROR: Exception on /index [POST] [in /home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py:1761]
+  File "/home/ubuntu/working-hours-app/app/main/routes.py", line 395, in index
+    dct_hours, dct_overtime, wks, dct_drivingPlusOther, dct_poa, dct_breaksAfterOB, dct_driving, dct_other = weeklySum2(listHours)
+  File "/home/ubuntu/working-hours-app/app/main/routes.py", line 226, in weeklySum2
+    d = timedelta(hours=int(h), minutes=int(m))
+ValueError: invalid literal for int() with base 10: '-1 day, 4'
+2019-05-10 16:47:28,211 ERROR: Exception on /work/index [GET] [in /home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 2292, in wsgi_app
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1815, in full_dispatch_request
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py", line 1815, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1718, in handle_user_exception
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py", line 1718, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/_compat.py", line 35, in reraise
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/_compat.py", line 35, in reraise
     raise value
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1813, in full_dispatch_request
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1799, in dispatch_request
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask/app.py", line 1799, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask_login/utils.py", line 261, in decorated_view
+  File "/home/ubuntu/working-hours-app/venv/lib/python3.5/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/ryan/working-hours-app/app/main/routes.py", line 233, in index
-    cumul_hrs, cumul_overtime, week_Begin_dt = getCumul(week_Begin, listHours)
-  File "/home/ryan/working-hours-app/app/main/routes.py", line 151, in getCumul
-    cumul_hrs = strfdelta(dct_hours[datetime.fromisoformat(week_Begin)], '%H:%M')
-AttributeError: type object 'datetime.datetime' has no attribute 'fromisoformat'
-2019-05-06 18:49:29,256 ERROR: Exception on /index [POST] [in /home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py:1761]
-Traceback (most recent call last):
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1815, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1718, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/_compat.py", line 35, in reraise
-    raise value
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/ryan/working-hours-app/env/lib/python3.5/site-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/ryan/working-hours-app/app/main/routes.py", line 233, in index
-    cumul_hrs, cumul_overtime, week_Begin_dt = getCumul(week_Begin, listHours)
-  File "/home/ryan/working-hours-app/app/main/routes.py", line 151, in getCumul
-    cumul_hrs = strfdelta(dct_hours[datetime.fromisoformat(week_Begin)], '%H:%M')
-AttributeError: type object 'datetime.datetime' has no attribute 'fromisoformat'
+  File "/home/ubuntu/working-hours-app/app/main/routes.py", line 395, in index
+    dct_hours, dct_overtime, wks, dct_drivingPlusOther, dct_poa, dct_breaksAfterOB, dct_driving, dct_other = weeklySum2(listHours)
+  File "/home/ubuntu/working-hours-app/app/main/routes.py", line 226, in weeklySum2
+    d = timedelta(hours=int(h), minutes=int(m))
+ValueError: invalid literal for int() with base 10: '-1 day, 4'
