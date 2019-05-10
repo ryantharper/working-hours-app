@@ -1,4 +1,7 @@
 env/
 certs/
+__pycache__/
 
-*log
+app.db
+*.py[cod]
+*.log

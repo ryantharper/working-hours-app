@@ -138,8 +138,9 @@ def listDates(id):
             # this gets the DAY of the date
             day = datetime.strptime(row[0].isoformat(), '%Y-%m-%d').strftime("%A")
             if day == 'Saturday' or day == 'Sunday':
-                overtime = hrsWorked
-                hrsWorked, hrsWorkedSubbed = '0:00', '0:00' # would be just 0 but are 0:00 to allow for [:-3] das
+                if row[0]!=date(2019,3,30):
+                    overtime = hrsWorked
+                    hrsWorked, hrsWorkedSubbed = '0:00', '0:00' # would be just 0 but are 0:00 to allow for [:-3] das
 
             # adds data to list, [:-3] cuts off seconds (which are not needed)
             newList.append([row[0], row[1].strftime('%H:%M'), row[2].strftime('%H:%M'), str(hrsWorked)[:-3], str(hrsWorkedSubbed)[:-3], str(overtime)[:-3], str(row[3])[:-3], row[4], row[5], strfdelta(eval(row[6]), '%H:%M'), row[7].strftime('%H:%M'), row[8].strftime('%H:%M'), row[9].strftime('%H:%M'), row[10], str(break_over_official), row[13]])
