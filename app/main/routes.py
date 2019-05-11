@@ -360,8 +360,6 @@ def averages(listHours):
     #    year_section = biannual_num(week_number) # use for hlfs key
 
 
-
-
 #[16]->holiday/sick. count
 
 #def displayCumuls()
@@ -467,20 +465,7 @@ def index():
                 listHours = listDates(current_user.get_id())
 
                 return redirect(url_for('main.index'))
-    '''
-        elif 'cumuls' in request.form:
-            week_Begin = request.form['cumuls']
-            if week_Begin is not None:
-                listHours = listDates(current_user.get_id())
 
-                # what is the need for this?:
-                dct_hours, dct_overtime, wks, dct_drivingPlusOther, dct_poa, dct_breaksAfterOB, dct_driving, dct_other = weeklySum2(listHours)
-
-                #print(week_Begin)
-                cumul_hrs, cumul_overtime, week_Begin_dt, cumul_drivingPlusOther, cumul_poa, cumul_breaksAfterOB, cumul_driving, cumul_other = getCumul(week_Begin, listHours)
-                week_Begin_dt = week_Begin_dt.strftime('%A %-d %b %Y')
-                return redirect(url_for('main.index', cumul_hrs=cumul_hrs, cumul_overtime=cumul_overtime, week=week_Begin_dt, cumul_drivingPlusOther=cumul_drivingPlusOther, cumul_poa=cumul_poa, cumul_breaksAfterOB=cumul_breaksAfterOB, cumul_driving=cumul_driving, cumul_other=cumul_other))
-    '''
 
     listHours = listDates(current_user.get_id())
     listHours = restDailyWeekly(listHours)
