@@ -391,7 +391,9 @@ def index():
 
     #cumulChoices=
     cumulChoices = [('0', 'Cumulative for Week Beginning'), *[(str(i),j) for i,j in zip(wks,wks2)]]
-    cumulChoices.sort(key=lambda x:x[0])
+
+    cumulChoices[1:]= sorted(cumulChoices[1:], key=lambda x:datetime.strptime(x[0],'%Y-%m-%d %H:%M:%S'))
+    print(cumulChoices)
     cumul_form.week_select.choices=cumulChoices
 
     curUserId = current_user.get_id()
