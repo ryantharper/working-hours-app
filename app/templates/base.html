@@ -70,19 +70,43 @@
       $('#datepick').datetimepicker({format: 'YYYY-MM-DD'});
 
     });
-  </script>
-  <script>
+
+    var disableFields = ['timepick1', 'timepick2', 'timepick3', 'timepick4', 'timepick5', 'timepick6', 'timepick7', 'timepick8'];
+
+    var checkBoxes = ['holsick', 'holsick1', 'holsick2'];
+
+    /*
+    // why does this not work?
+    checkBoxes.forEach(function(box){
+        document.getElementById(box).onchange = function(){
+            disableFields.forEach(function(field){
+                document.getElementById(field).disabled = this.checked;
+            });
+        };
+    });
+    */
+
     document.getElementById('holsick').onchange = function(){
-      document.getElementById('timepick1').disabled = this.checked;
-      document.getElementById('timepick2').disabled = this.checked;
-      document.getElementById('timepick3').disabled = this.checked;
-      document.getElementById('timepick4').disabled = this.checked;
-      document.getElementById('timepick5').disabled = this.checked;
-      document.getElementById('timepick6').disabled = this.checked;
-      document.getElementById('timepick7').disabled = this.checked;
-      document.getElementById('timepick8').disabled = this.checked;
-    };
+        for (i=0; i<disableFields.length; i++){
+            document.getElementById(disableFields[i]).disabled = this.checked;
+    }};
+    document.getElementById('holsick1').onchange = function(){
+        for (i=0; i<disableFields.length; i++){
+            document.getElementById(disableFields[i]).disabled = this.checked;
+    }};
+    document.getElementById('holsick2').onchange = function(){
+        for (i=0; i<disableFields.length; i++){
+            document.getElementById(disableFields[i]).disabled = this.checked;
+    }};
+
+    document.getElementById('cumul_drop').onchange = function(){
+        if (this.value != '0') {
+            this.form.submit();
+        }
+    }
+
   </script>
+
 {% endblock %}
 <!--
 $('#timepick1').datetimepicker({format: 'H:mm'});

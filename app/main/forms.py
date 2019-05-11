@@ -25,28 +25,30 @@ class OptionalIf(Optional):
 class HoursForm(FlaskForm):
     # Date; Sick/Holiday (checkbox; Start Time; End Time; Submit
     dateEntry = DateField(label='Date', format='%Y-%m-%d', id='datepick', validators=[DataRequired()])
-    holiday_sick = BooleanField('Holiday or Sick?', id="holsick", validators=[Optional()])
-    start_time = TimeField(label='Start Time', id='timepick1', format='%H:%M', validators=[OptionalIf('holiday_sick')])
-    end_time = TimeField(label='End Time', id='timepick2', validators=[OptionalIf('holiday_sick')])
-    driving_hours = TimeField(label='Driving Hours', id='timepick3', validators=[OptionalIf('holiday_sick')])
+    holiday_sick = BooleanField('Holiday? (Adds 8 hours onto total hours)', id="holsick", validators=[Optional()])
+    holiday_noAddedHours = BooleanField('Holiday? NO ADDED WORK HOURS', id="holsick1", validators=[Optional()])
+    sick = BooleanField('Sick?', id="holsick2", validators=[Optional()])
+    start_time = TimeField(label='Start Time', id='timepick1', format='%H:%M', validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
+    end_time = TimeField(label='End Time', id='timepick2', validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
+    driving_hours = TimeField(label='Driving Hours', id='timepick3', validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
 
     # OFFICIAL break
-    breaks = SelectField(label='Official Break', id='timepick4', choices=[('timedelta(0)', '0 minutes'), ('timedelta(minutes=15)', '15 minutes'),('timedelta(minutes=30)', '30 minutes'),('timedelta(minutes=45)', '45 minutes')], validators=[OptionalIf('holiday_sick')])
+    breaks = SelectField(label='Official Break', id='timepick4', choices=[('timedelta(0)', '0 minutes'), ('timedelta(minutes=15)', '15 minutes'),('timedelta(minutes=30)', '30 minutes'),('timedelta(minutes=45)', '45 minutes')], validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
 
-    other_work = TimeField(label='Other Work', id='timepick5', validators=[OptionalIf('holiday_sick')])
-    poa = TimeField(label='POA', id='timepick6', validators=[OptionalIf('holiday_sick')])
+    other_work = TimeField(label='Other Work', id='timepick5', validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
+    poa = TimeField(label='POA', id='timepick6', validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
 
     # total rest, see models.py for details
-    total_rest = TimeField(label='Total Rest', id='timepick7', validators=[OptionalIf('holiday_sick')])
+    total_rest = TimeField(label='Total Rest', id='timepick7', validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
 
-    start_of_week = BooleanField('Start of Week?', id="startweek", validators=[OptionalIf('holiday_sick')])
+    start_of_week = BooleanField('Start of Week?', id="startweek", validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
     # see what happens if FRIDAY or THURS/FRI is HOLIDAY/SICK, how does that account for WEEKLY REST
-    end_of_week = BooleanField('End of Week?', id="endweek", validators=[OptionalIf('holiday_sick')])
+    end_of_week = BooleanField('End of Week?', id="endweek", validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
 
 
 
-    end_of_shift = BooleanField("Data taken from Today's shift?", id="timepick8", validators=[OptionalIf('holiday_sick')]) # see models.py for details
-    utc_plusone = BooleanField("Is this data in UTC+1?", id="timepick9", validators=[OptionalIf('holiday_sick')])
+    end_of_shift = BooleanField("Data taken from Today's shift?", id="timepick8", validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')]) # see models.py for details
+    utc_plusone = BooleanField("Is this data in UTC+1?", id="timepick9", validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
     submit = SubmitField('Submit')
 
     def validate_dateEntry(self, dateEntry):
@@ -65,3 +67,7 @@ class HoursForm(FlaskForm):
         super().__init__(*args, **kwargs)
         if not self.dateEntry.data:
             self.dateEntry.data = datetime.datetime.strptime(datetime.date.today().strftime(format='%Y-%m-%d'), '%Y-%m-%d')
+
+class CumulativeDropdown(FlaskForm):
+    week_select = SelectField(coerce=str, id='cumul_drop', validators=[DataRequired()])
+    submit1 = SubmitField('Submit')

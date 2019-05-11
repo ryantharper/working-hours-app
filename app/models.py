@@ -25,9 +25,14 @@ class User(UserMixin, db.Model):
 class Work(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime)
-    holiday_sick = db.Column(db.Boolean)
+
+    holiday_sick = db.Column(db.Boolean) # HOLIDAY, WITH ADDED 8 HRS
+    holiday_NAH = db.Column(db.Boolean) # HOLIDAY, *NO* ADDED 8 HRS
+    sick = db.Column(db.Boolean) # SICK DAYS, UNSURE WHAT TO DO WITH YET
+
     start_time = db.Column(db.DateTime)
     end_time = db.Column(db.DateTime)
+    
     driving_hours = db.Column(db.DateTime)
     breaks = db.Column(db.String(64)) # OFFICIAL BREAK. 0,15,30,45mins
     other_work = db.Column(db.DateTime)
