@@ -389,8 +389,9 @@ def index():
     wks2 = [wkbgn.strftime('%A') + ' ' + wkbgn.strftime('%-d') + ' ' + wkbgn.strftime('%b') + ' ' + wkbgn.strftime('%Y') for wkbgn in wks]
                                     # value, label
 
-    cumulChoices=[(str(i),j) for i,j in zip(wks,wks2)]
-    cumulChoices = [('0', 'Cumulative for Week Beginning'), *cumulChoices]
+    #cumulChoices=
+    cumulChoices = [('0', 'Cumulative for Week Beginning'), *[(str(i),j) for i,j in zip(wks,wks2)]]
+    cumulChoices.sort(key=lambda x:x[0])
     cumul_form.week_select.choices=cumulChoices
 
     curUserId = current_user.get_id()
@@ -470,10 +471,6 @@ def index():
     listHours = listDates(current_user.get_id())
     listHours = restDailyWeekly(listHours)
 
-    #dct_hours, dct_overtime, wks, dct_drivingPlusOther, dct_poa, dct_breaksAfterOB, dct_driving, dct_other = weeklySum2(listHours)
-    #print('WEEKLYSUM2 WKS')
-    #print(wks)
-    #wks2 = [wkbgn.strftime('%A') + ' ' + wkbgn.strftime('%-d') + ' ' + wkbgn.strftime('%b') + ' ' + wkbgn.strftime('%Y') for wkbgn in wks]
 
     # gets current week cumulatives -- NEED TO INCLUDE OTHERS
     currWeeklyHours, currWeeklyOvertime = getWeeklySum(listHours)
