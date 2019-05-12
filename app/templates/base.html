@@ -105,6 +105,12 @@
         }
     }
 
+    document.getElementById('runsum_drop').onchange = function(){
+        if (this.value != '0') {
+            this.form.submit();
+        }
+    }
+
   </script>
 
 {% endblock %}

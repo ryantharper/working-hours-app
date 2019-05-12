@@ -71,6 +71,14 @@
             </div>
             <div class="panel-body">
                 Stuff here. work hours (averages) etc
+                {{ wtf.quick_form(runsum_form) }}
+                {% set runsum_drivingOther = session.pop('runsum_drivingOther', None) %}
+
+                {# {% if runsum_drivingOther != None %} #}
+                <p><b>Work Hours Running Sum: </b>{{ runsum_drivingOther[0] }}</p>
+                <p><b>Work Hours Week Average: </b>{{ runsum_drivingOther[1] }}</p>
+                {# {% endif %} #}
+
             </div>
         </div>
 

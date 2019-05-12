@@ -70,4 +70,7 @@ class HoursForm(FlaskForm):
 
 class CumulativeDropdown(FlaskForm):
     week_select = SelectField(coerce=str, id='cumul_drop', validators=[DataRequired()])
-    submit1 = SubmitField('Submit')
+
+
+class RunningSumDropdown(FlaskForm):
+    week_select1 = SelectField(coerce=str, id='runsum_drop', validators=[DataRequired()])

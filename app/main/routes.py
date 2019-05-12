@@ -1,6 +1,6 @@
 from app import db
 from flask import render_template, flash, redirect, request, url_for, send_file, session
-from app.main.forms import HoursForm, CumulativeDropdown
+from app.main.forms import HoursForm, CumulativeDropdown, RunningSumDropdown
 
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -52,7 +52,7 @@ def breakOverOfficial_EndShiftTrue(total_rest, end, hours_worked, official_break
     # convert total_rest to timedelta
     # MAYBE USE datetime.combine(date.min,TIMEOBJ)-datetime.min instead? returns a timedelta obj
     h,m=total_rest.strftime('%-H:%-M').split(':')
-    total_rest_td = timedelta(hours=int(h),minutes=int(m)) #treos
+    total_rest_td = timedelta(hours=int(h),minutes=int(m))
 
     end_td_r2 = timedelta(hours=24)-(datetime.combine(date.min,end)-datetime.min)
 
@@ -62,13 +62,9 @@ def breakOverOfficial_EndShiftTrue(total_rest, end, hours_worked, official_break
 
     hours_worked_opp = timedelta(hours=24)-hours_worked
 
-    #return (total_rest_td-(hours_worked_opp+official_break))
-
     return (total_rest_td-(official_break+hours_worked_opp))
 
-# NEED TO ADD START OF WEEK ON FORM AND DATABASE
 
-# column [13] is end_of_week, column [2] is END TIME, column [15] is start_of_week
 def restDailyWeekly(listHours):
     for row in listHours:
         row_index = listHours.index(row)
@@ -87,7 +83,6 @@ def restDailyWeekly(listHours):
 
                 dailyRestComp = str(start_current_td + (timedelta(hours=24)-end_before_td))
 
-                #row.append(dailyRestComp)
                 row.append(str(str(dailyRestComp)+', D'))
             else: # weekly rest
                 if listHours[row_index-1][13]==True:
@@ -96,7 +91,7 @@ def restDailyWeekly(listHours):
 
                     weeklyRestComp=datetime.combine(listHours[row_index][0],starttime_current_day)-datetime.combine(listHours[row_index-1][0],endtime_day_before)
 
-                    row.append(strfdelta(weeklyRestComp, '%H:%M')+', W') #str(str(weeklyRestComp)
+                    row.append(strfdelta(weeklyRestComp, '%H:%M')+', W')
                 else:
                     row.append('Error. No End of Week has been defined')
     return listHours
@@ -111,12 +106,13 @@ def listDates(id):
             dateList.append([row.date.date(), None, None, None, row.id, row.week_beginning, None, None, None, None, row.end_of_week, None, None,row.start_of_week])
         else:               # 0                 1                       2                   3                       4       5                   6           7               8         9              10               11                12               13                 14                 15
             dateList.append([row.date.date(), row.start_time.time(), row.end_time.time(), row.driving_hours.time(), row.id, row.week_beginning, row.breaks, row.other_work, row.poa, row.total_rest, row.end_of_week, row.end_of_shift, row.utc_plusone, row.start_of_week, row.holiday_sick, row.holiday_NAH])
+
             #newList.append([row[0], row[1].strftime('%H:%M'), row[2].strftime('%H:%M'), str(hrsWorked)[:-3], str(hrsWorkedSubbed)[:-3], str(overtime)[:-3], str(row[3]), row[4], row[5], strfdelta(eval(row[6]), '%H:%M'), row[7].strftime('%H:%M:%S'), row[8].strftime('%H:%M'), row[9].strftime('%H:%M'), row[10], str(break_over_official), row[13]])
             #newList.append([row[0], '0:00',                  '0:00',                   '0:00',               '0:00',                    '0:00',            '4:00:S',    row[4], row[5], '0:00',                            '4:00:S',                    '0:00',                  '0:00',                    None,      '0:00',                 row[13]]) # NONE - row[10]= end of week, what to do with this?
             # NEW LIST       0-DATE, 1-START_TIME,             2-END_TIME,               3-HOURSWORKED,        4-HOURSWORKEDminusOB,      5-OVERTIME,        6-DRIVING,  7-ROWid 8-Wkbn, 9-OFFICIAL_BREAKS,                 10-OTHER WORK,               11-POA,                   12-TOTAL_REST,           13-endWk,   14-BREAK_OVER_OFFICIAL, 15-START OF WEEK, 16 - HOLIDAY_SICK, 17-HOLIDAY_NOADDEDHOURS
+
     newList = []
-    #print('datelist:')
-    #print(dateList)
+
     for row in dateList:
         if row[1] != None: #,None,None
             hrsWorked = datetime.combine(row[0],row[2])-datetime.combine(row[0],row[1])
@@ -150,7 +146,7 @@ def listDates(id):
         # NEW LIST 0-DATE, 1-START_TIME, 2-END_TIME, 3-HOURSWORKED, 4-HOURSWORKEDminusOB, 5-OVERTIME, 6-DRIVINGHOURS, 7-ROW_ID, 8-WEEK_BEGINNING, 9-OFFICIAL_BREAKS, 10-OTHER WORK, 11-POA, 12-TOTAL_REST, 13-END_OF_WEEK, 14-BREAK_OVER_OFFICIAL, 15-START OF WEEK, 16-HOLIDAY_SICK, 17-HOLIDAY_NOADDEDHOURS
 
         else:                                                               #DRIVING                            #OTHER
-            newList.append([row[0], '0:00', '0:00', '0:00', '0:00', '0:00', '0:00', row[4], row[5], '0:00:00', '4:00', '0:00', '0:00', None, '0:00:00', row[13], row[14], row[15]]) # NONE - row[10]= end of week, what to do with this?
+            newList.append([row[0], '0:00', '0:00', '0:00', '0:00', '0:00', '0:00', row[4], row[5], '0:00:00', '0:00', '0:00', '0:00', None, '0:00:00', row[13], row[14], row[15]]) # NONE - row[10]= end of week, what to do with this?
 
     # sorts list by the date
     newList.sort(key=lambda x:x[0])
@@ -169,7 +165,6 @@ def getWeeklySum(listHours):
     diff = currentDay - start_week
     week_list = [(start_week + timedelta(days=i)).date() for i in range(diff.days+1)]
 
-    #print(listHours)
     cumuls = [i for i in listHours for j in week_list if i[0]==j]
 
     sumHours = timedelta()
@@ -298,8 +293,6 @@ def getCumul(week_Begin, listHours):
         if isinstance(week_Begin, str):
             cumul_hrs = strfdelta(dct_hours[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
             cumul_overtime = strfdelta(dct_overtime[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
-            print('overtime cumul')
-            print(cumul_overtime)
             cumul_drivingPlusOther = strfdelta(dct_drivingPlusOther[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
             cumul_poa = strfdelta(dct_poa[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
             cumul_breaksAfterOB = strfdelta(dct_breaksAfterOB[datetime.strptime(week_Begin, '%Y-%m-%d %H:%M:%S')], '%H:%M')
@@ -318,18 +311,6 @@ def getCumul(week_Begin, listHours):
     else:
         return 0,0,0,0,0,0,0
 
-def qtr_num(week_num):
-    if week_num >= 1 and week_num <=12:
-        return 'Q1'
-    elif week_num >= 13 and week_num <=25:
-        return 'Q2'
-    elif week_num >= 26 and week_num <=39:
-        return 'Q3'
-    elif week_num >= 40 and week_num <=53:
-        return 'Q4'
-    else:
-        raise Exception('Week number not defined')
-
 def biannual_num(week_num):
     if week_num >= 1 and week_num <= 26:
         return 'H1'
@@ -338,45 +319,94 @@ def biannual_num(week_num):
     else:
         raise Exception('Week number not defined')
 
-def averages(listHours):
-    dct_hours, dct_overtime, weeks, dct_drivingPlusOther, dct_poa, dct_breaksAfterOB, dct_driving, dct_other = weeklySum2(listHours)
-    qtrs = {'Q1':[],'Q2':[],'Q3':[],'Q4':[]} # empty quarters dictionary; list ctns work hrs (other+drv), poa hrs, total hrs (other+drv+(annual leave*8))
-    hlfs = {'H1':[],'H2':[]} # year halves. 26 weeks each
-    week_averag
-    cols = list(zip(*listHours))
+def weekDivider(dct, week_num):
+    # half is either H1 or H2
+    week_nums = sorted([int(n.split(',')[1]) for n in dct]) # get week numbers
+    print(week_nums)
+    divisor = (week_nums.index(int(week_num)))+1
 
+    return divisor
+
+
+def averagesWorkHours(listHours):
+    dct_hours, dct_overtime, weeks, dct_drivingPlusOther, dct_poa, dct_breaksAfterOB, dct_driving, dct_other = weeklySum2(listHours)
+    hlfs = {'H1':{},'H2':{}} # year halves. 26 weeks each
+
+    cols = list(zip(*listHours))
     #array = list(zip(cols[X])) --> get column as list
     # .strftime("%V") --> gets WEEK NUMBER
 
-    holiday_added_hours = cols[16].count(True) # multiply by 8 -> add to TOTAL hours.
+    holiday_added_hours = cols[16].count(True) # multiply by 8 -> add to TOTAL #runningSum_drivingOther = dict(zip(dct_drivingPlusOther.keys(), itertools.accumulate(dct_drivingPlusOther.values())))
 
-    runningSum_drivingOther = dict(zip(dct_drivingPlusOther.keys(), itertools.accumulate(dct_drivingPlusOther.values())))
+    list_drivingOther = list(zip(dct_drivingPlusOther.keys(), dct_drivingPlusOther.values()))
 
+    dpo_list = [(k.strftime('%Y-%m-%d %H:%M:%S')+','+k.strftime("%V"), v) for k,v in list_drivingOther]
 
-
-    # reminder: cumul is timedelta. use strfdelta to format it into a string
-    #for weekBegin, cumul in dct_drivingPlusOther:
-    #    week_number = weekBegin.strftime('%V')
-    #    year_section = biannual_num(week_number) # use for hlfs key
-
-
-#[16]->holiday/sick. count
-
-#def displayCumuls()
+    for week_begin, hrs in dpo_list:
+        week, week_num = week_begin.split(',')
+        year_section = biannual_num(int(week_num))
+        hlfs[year_section].setdefault(week_begin, timedelta())
+        hlfs[year_section].update({week_begin:hrs})
 
 
+    hlfs_runningSum = {'H1':dict(zip(hlfs['H1'].keys(), itertools.accumulate(hlfs['H1'].values()))),'H2':dict(zip(hlfs['H2'].keys(), itertools.accumulate(hlfs['H2'].values())))}
 
-# TEST PAGE -- DELETES WORK DB DATA
-@bp.route('/start')
-def start():
-    # TESTING: DELETE WORK DB ROWS
-    #db.session.query(Work).delete()
-    #db.session.commit()
-
-    return render_template('startpage.html')
+    # ONLY RETURN CURRENT YEAR HALF
+    #return hlfs_runningSum[biannual_num(int(datetime.today().strftime('%V')))]
 
 
-# this will be the main page, with the hours form etc
+
+    print(hlfs_runningSum['H1'])
+    return hlfs_runningSum['H1'], hlfs_runningSum['H2']
+
+    # need WORK HOURS (driving+other) and TOTAL WORK HOURS (driving+other+annual leave days) --> annual leave days = 8hrs each, col 16
+
+def getAverages(week_begin, listHours):
+    #cumul_breaksAfterOB = strfdelta(dct_breaksAfterOB[week_Begin.replace(hour=0, minute=0, second=0, microsecond=0)], '%H:%M')
+    #datetime.strptime(week_begin, '%Y-%m-%d %H:%M:%S')
+    runningSum_drivingOther_h1, runningSum_drivingOther_h2 = averagesWorkHours(listHours)
+    week,week_num=week_begin.split(',')
+    if listHours != []:
+        if isinstance(week_begin, str):
+            if biannual_num(int(datetime.today().strftime('%V'))) == 'H1':
+                divisor=weekDivider(runningSum_drivingOther_h1, week_num)
+
+                runsum_drivingOther_Avg = strfdelta(runningSum_drivingOther_h1[week_begin]/(int(divisor)), '%H:%M')
+                runsum_drivingOther = strfdelta(runningSum_drivingOther_h1[week_begin], '%H:%M')
+
+                return runsum_drivingOther, runsum_drivingOther_Avg
+
+            else:
+                divisor=weekDivider(runningSum_drivingOther_h2, week_num)
+
+                runsum_drivingOther_Avg = strfdelta(runningSum_drivingOther_h1[week_begin]/(int(divisor)), '%H:%M')
+                runsum_drivingOther = strfdelta(runningSum_drivingOther_h2[week_begin], '%H:%M')
+
+                return runsum_drivingOther, runsum_drivingOther_Avg
+
+        else:
+            if biannual_num(int(datetime.today().strftime('%V'))) == 'H1':
+                divisor=weekDivider(runningSum_drivingOther_h1, week_num)
+
+                runsum_drivingOther_Avg = strfdelta(runningSum_drivingOther_h1[week_begin]/(int(divisor)), '%H:%M')
+                runsum_drivingOther = strfdelta(runningSum_drivingOther_h1[week_begin], '%H:%M')
+
+                return runsum_drivingOther, runsum_drivingOther_Avg
+
+            else:
+                divisor=weekDivider(runningSum_drivingOther_h2, week_num)
+
+                runsum_drivingOther_Avg = strfdelta(runningSum_drivingOther_h1[week_begin.replace(hour=0, minute=0, second=0, microsecond=0)]/(int(divisor)-26), '%H:%M')
+                runsum_drivingOther = strfdelta(runningSum_drivingOther_h2[week_begin.replace(hour=0, minute=0, second=0, microsecond=0)], '%H:%M')
+
+                return runsum_drivingOther, runsum_drivingOther_Avg
+    else:
+        return 0
+
+        #replace(hour=0, minute=0, second=0, microsecond=0)
+
+
+
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required # login required decorator from flask_login
@@ -384,17 +414,25 @@ def index():
     form = HoursForm()
     cumul_form = CumulativeDropdown()
 
+    runsum_form = RunningSumDropdown()
+
     listHours = listDates(current_user.get_id())
     dct_hours, dct_overtime, wks, dct_drivingPlusOther, dct_poa, dct_breaksAfterOB, dct_driving, dct_other = weeklySum2(listHours)
     wks2 = [wkbgn.strftime('%A') + ' ' + wkbgn.strftime('%-d') + ' ' + wkbgn.strftime('%b') + ' ' + wkbgn.strftime('%Y') for wkbgn in wks]
-                                    # value, label
 
-    #cumulChoices=
     cumulChoices = [('0', 'Cumulative for Week Beginning'), *[(str(i),j) for i,j in zip(wks,wks2)]]
-
     cumulChoices[1:]= sorted(cumulChoices[1:], key=lambda x:datetime.strptime(x[0],'%Y-%m-%d %H:%M:%S'))
-    print(cumulChoices)
+
     cumul_form.week_select.choices=cumulChoices
+
+    runsumChoices = [('0', 'Select Week'), *[(str(i)+','+i.strftime("%V"),'Week '+i.strftime("%V")+': '+j) for i,j in zip(wks,wks2)]]
+    runsumChoices[1:] = sorted(runsumChoices[1:], key=lambda x:datetime.strptime(x[0][:-3],'%Y-%m-%d %H:%M:%S'))
+
+
+
+    #week_nums = [int(n[0].split(',')[1]) for n in x]
+
+    runsum_form.week_select1.choices=runsumChoices
 
     curUserId = current_user.get_id()
 
@@ -442,7 +480,7 @@ def index():
 
     if cumul_form.validate_on_submit():
         week_begin = cumul_form.week_select.data
-        print(week_begin)
+
         listHours = listDates(current_user.get_id())
 
         # what is the need for this?:
@@ -458,6 +496,19 @@ def index():
         #print(cumul_hrs)
         session['cumul_list'] = cumul_list
         return redirect(url_for('main.index'))
+
+    if runsum_form.validate_on_submit():
+        #week_begin, week_num = runsum_form.week_select.data.split(',')
+        week_begin = runsum_form.week_select1.data
+
+        listHours = listDates(current_user.get_id())
+
+        runsum_drivingOther, runsum_drivingOther_Avg = getAverages(week_begin, listHours)
+
+        session['runsum_drivingOther'] = [runsum_drivingOther, runsum_drivingOther_Avg]
+
+        return redirect(url_for('main.index'))
+
 
     # row deletion
     if request.method == 'POST':
@@ -480,7 +531,7 @@ def index():
     #cumul_hrs, cumul_overtime, week, cumul_drivingPlusOther, cumul_poa, cumul_breaksAfterOB, cumul_driving, cumul_other =
 
     #return render_template('index.html', form=form, cumul_form=cumul_form, hoursDb = listHours, wks=wks, wks2=wks2, zip=zip, cumul_hrs=cumul_hrs, cumul_overtime=cumul_overtime, cumul_drivingPlusOther=cumul_drivingPlusOther, currWeeklyHours=currWeeklyHours, currWeeklyOvertime=currWeeklyOvertime, cumul_poa=cumul_poa,cumul_breaksAfterOB=cumul_breaksAfterOB, cumul_driving=cumul_driving, cumul_other=cumul_other, week=week)
-    return render_template('index.html', form=form, cumul_form=cumul_form, hoursDb = listHours, wks=wks, wks2=wks2, zip=zip, currWeeklyHours=currWeeklyHours, currWeeklyOvertime=currWeeklyOvertime)
+    return render_template('index.html', form=form, cumul_form=cumul_form, runsum_form=runsum_form, hoursDb = listHours, wks=wks, wks2=wks2, zip=zip, currWeeklyHours=currWeeklyHours, currWeeklyOvertime=currWeeklyOvertime)
 
 
 @bp.route('/mydata')
