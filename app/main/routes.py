@@ -322,7 +322,6 @@ def biannual_num(week_num):
 def weekDivider(dct, week_num):
     # half is either H1 or H2
     week_nums = sorted([int(n.split(',')[1]) for n in dct]) # get week numbers
-    print(week_nums)
     divisor = (week_nums.index(int(week_num)))+1
 
     return divisor
@@ -363,9 +362,6 @@ def averagesWorkHours(listHours):
     # ONLY RETURN CURRENT YEAR HALF
     #return hlfs_runningSum[biannual_num(int(datetime.today().strftime('%V')))]
 
-
-
-    print(hlfs_runningSum['H1'])
     return hlfs_runningSum['H1'], hlfs_runningSum['H2']
 
     # need WORK HOURS (driving+other) and TOTAL WORK HOURS (driving+other+annual leave days) --> annual leave days = 8hrs each, col 16
