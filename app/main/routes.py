@@ -354,7 +354,13 @@ def averagesWorkHours(listHours):
         hlfs[year_section].update({week_begin:hrs})
 
 
-    hlfs_runningSum = {'H1':dict(zip(hlfs['H1'].keys(), itertools.accumulate(hlfs['H1'].values()))),'H2':dict(zip(hlfs['H2'].keys(), itertools.accumulate(hlfs['H2'].values())))}
+    #h1_dict=dict(zip(hlfs['H1'].keys(), itertools.accumulate(hlfs['H1'].values())))
+    #h2_dict=dict(zip(hlfs['H2'].keys(), itertools.accumulate(hlfs['H2'].values())))
+    h1_dict=dict(zip(sorted(hlfs['H1'].keys(), key=lambda x:(x[0].split(','))[0]), itertools.accumulate(hlfs['H1'].values())))
+    h2_dict=dict(zip(sorted(hlfs['H2'].keys(), key=lambda x:(x[0].split(','))[0]), itertools.accumulate(hlfs['H2'].values())))
+    
+
+    hlfs_runningSum = {'H1':h1_dict,'H2':h2_dict}
 
     print('hlfs_runningSum')
     print(hlfs_runningSum)
