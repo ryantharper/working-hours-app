@@ -338,9 +338,15 @@ def averagesWorkHours(listHours):
 
     holiday_added_hours = cols[16].count(True) # multiply by 8 -> add to TOTAL #runningSum_drivingOther = dict(zip(dct_drivingPlusOther.keys(), itertools.accumulate(dct_drivingPlusOther.values())))
 
+    #y=sorted(x, key=lambda x:(x[0].split(',')[1]))
+
     list_drivingOther = list(zip(dct_drivingPlusOther.keys(), dct_drivingPlusOther.values()))
 
+
+
     dpo_list = [(k.strftime('%Y-%m-%d %H:%M:%S')+','+k.strftime("%V"), v) for k,v in list_drivingOther]
+
+    dpo_list = sorted(dpo_list, key=lambda x:(x[0].split(','))[0])
 
     for week_begin, hrs in dpo_list:
         week, week_num = week_begin.split(',')
