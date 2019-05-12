@@ -356,9 +356,26 @@ def averagesWorkHours(listHours):
 
     #h1_dict=dict(zip(hlfs['H1'].keys(), itertools.accumulate(hlfs['H1'].values())))
     #h2_dict=dict(zip(hlfs['H2'].keys(), itertools.accumulate(hlfs['H2'].values())))
-    h1_dict=dict(zip(sorted(hlfs['H1'].keys(), key=lambda x:(x[0].split(','))[0]), itertools.accumulate(hlfs['H1'].values())))
-    h2_dict=dict(zip(sorted(hlfs['H2'].keys(), key=lambda x:(x[0].split(','))[0]), itertools.accumulate(hlfs['H2'].values())))
-    
+    #h1_dict=dict(zip(sorted(hlfs['H1'].keys(), key=lambda x:(x[0].split(','))[0]), itertools.accumulate(hlfs['H1'].values())))
+    #h2_dict=dict(zip(sorted(hlfs['H2'].keys(), key=lambda x:(x[0].split(','))[0]), itertools.accumulate(hlfs['H2'].values())))
+    h1_dict = {}
+    h2_dict = {}
+
+    h1_list = [(k,v) for k,v in hlfs['H1'].items()]
+    h2_list = [(k,v) for k,v in hlfs['H2'].items()]
+
+    sum1=timedelta()
+    for n in h1_list:
+        #t1=datetime.strptime(n[1], '%H:%M')
+        #t1_td = timedelta(hours=t1.hour,minutes=t1.minute)
+        sum1+=n[1]
+        h1_dict[n[0]]=sum1
+
+    sum1=timedelta()
+    for n in h2_list:
+        sum1+=n[1]
+        h2_dict[n[0]]=sum1
+
 
     hlfs_runningSum = {'H1':h1_dict,'H2':h2_dict}
 
