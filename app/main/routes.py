@@ -357,6 +357,9 @@ def averagesWorkHours(listHours):
 
     hlfs_runningSum = {'H1':dict(zip(hlfs['H1'].keys(), itertools.accumulate(hlfs['H1'].values()))),'H2':dict(zip(hlfs['H2'].keys(), itertools.accumulate(hlfs['H2'].values())))}
 
+    print('hlfs_runningSum')
+    print(hlfs_runningSum)
+
     # ONLY RETURN CURRENT YEAR HALF
     #return hlfs_runningSum[biannual_num(int(datetime.today().strftime('%V')))]
 
