@@ -505,7 +505,7 @@ def index():
 
         runsum_drivingOther, runsum_drivingOther_Avg = getAverages(week_begin, listHours)
 
-        session['runsum_drivingOther'] = [runsum_drivingOther, runsum_drivingOther_Avg]
+        session['runsum_drivingOther_list'] = [runsum_drivingOther, runsum_drivingOther_Avg]
 
         return redirect(url_for('main.index'))
 
