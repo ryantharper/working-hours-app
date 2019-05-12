@@ -341,11 +341,18 @@ def averagesWorkHours(listHours):
 
     list_drivingOther = list(zip(dct_drivingPlusOther.keys(), dct_drivingPlusOther.values()))
 
+    #print('list_drivingOther')
+    #print(list_drivingOther)
 
 
     dpo_list = [(k.strftime('%Y-%m-%d %H:%M:%S')+','+k.strftime("%V"), v) for k,v in list_drivingOther]
 
+
+
+    dpo_list = [list(elem) for elem in dpo_list]
     dpo_list = sorted(dpo_list, key=lambda x:(x[0].split(','))[0])
+    #print('dpo_list')
+    #print(dpo_list)
 
     for week_begin, hrs in dpo_list:
         week, week_num = week_begin.split(',')
@@ -353,6 +360,8 @@ def averagesWorkHours(listHours):
         hlfs[year_section].setdefault(week_begin, timedelta())
         hlfs[year_section].update({week_begin:hrs})
 
+    #print('hlfs')
+    #print(hlfs)
 
     #h1_dict=dict(zip(hlfs['H1'].keys(), itertools.accumulate(hlfs['H1'].values())))
     #h2_dict=dict(zip(hlfs['H2'].keys(), itertools.accumulate(hlfs['H2'].values())))
@@ -361,8 +370,19 @@ def averagesWorkHours(listHours):
     h1_dict = {}
     h2_dict = {}
 
+
     h1_list = [(k,v) for k,v in hlfs['H1'].items()]
     h2_list = [(k,v) for k,v in hlfs['H2'].items()]
+
+    h1_list = sorted(h1_list, key=lambda x:(x[0].split(','))[0])
+    h2_list = sorted(h2_list, key=lambda x:(x[0].split(','))[0])
+
+    print('h1_list')
+    print(h1_list)
+
+    print('h2_list')
+    print(h2_list)
+
 
     sum1=timedelta()
     for n in h1_list:
@@ -379,8 +399,8 @@ def averagesWorkHours(listHours):
 
     hlfs_runningSum = {'H1':h1_dict,'H2':h2_dict}
 
-    print('hlfs_runningSum')
-    print(hlfs_runningSum)
+    #print('hlfs_runningSum')
+    #print(hlfs_runningSum)
 
     # ONLY RETURN CURRENT YEAR HALF
     #return hlfs_runningSum[biannual_num(int(datetime.today().strftime('%V')))]
