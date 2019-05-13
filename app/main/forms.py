@@ -25,9 +25,11 @@ class OptionalIf(Optional):
 class HoursForm(FlaskForm):
     # Date; Sick/Holiday (checkbox; Start Time; End Time; Submit
     dateEntry = DateField(label='Date', format='%Y-%m-%d', id='datepick', validators=[DataRequired()])
+
     holiday_sick = BooleanField('Holiday? (Adds 8 hours onto total hours)', id="holsick", validators=[Optional()])
     holiday_noAddedHours = BooleanField('Holiday? NO ADDED WORK HOURS', id="holsick1", validators=[Optional()])
     sick = BooleanField('Sick?', id="holsick2", validators=[Optional()])
+
     start_time = TimeField(label='Start Time', id='timepick1', format='%H:%M', validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
     end_time = TimeField(label='End Time', id='timepick2', validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])
     driving_hours = TimeField(label='Driving Hours', id='timepick3', validators=[OptionalIf('holiday_sick'), OptionalIf('holiday_noAddedHours'), OptionalIf('sick')])

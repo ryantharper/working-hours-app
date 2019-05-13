@@ -13,7 +13,7 @@
     </div>
     <div class="col-md-8">
         <p>table is scrollable (horizontally and vertically)</p>
-        <p><a href="{{ url_for('main.download_data') }}">Download as Excel</a>[FEATURE DOES NOT WORK YET]</p>
+        <p><a href="{{ url_for('main.download_data') }}">Download as Excel</a></p>
         <div class="panel panel-default table-responsive fixedHeader">
             <!-- Table -->
             <table class="table table-striped">
@@ -63,6 +63,7 @@
                 </tbody>
             </table>
         </div>
+        <p><a href="{{ url_for('main.download_weekly_runsum') }}">Download Weekly Data as Excel</a></p>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="panel-title">
@@ -70,14 +71,36 @@
                 </div>
             </div>
             <div class="panel-body">
-                Stuff here. work hours (averages) etc
                 {{ wtf.quick_form(runsum_form) }}
-                {% set runsum_drivingOther = session.pop('runsum_drivingOther_list', None) %}
+                {% set runsum_drivingOther = session.pop('runsum_drivingOther_list', []) %}
+                {% set runsum_totalHours = session.pop('runsum_totalHours_list', []) %}
+                {% set week_list = session.pop('week_list', []) %}
 
-                {# {% if runsum_drivingOther != None %} #}
-                <p><b>Work Hours Running Sum: </b>{{ runsum_drivingOther[0] }}</p>
-                <p><b>Work Hours Week Average: </b>{{ runsum_drivingOther[1] }}</p>
-                {# {% endif %} #}
+                <div class="row">
+                    <div class="col-md-4">
+                        {% if week_list != [] %}
+                        <p>Week Beginning: <b>{{ week_list[0] }}</b></p>
+                        <p>Week Number (Year): <b>{{ week_list[1] }}</b></p>
+                        <p>Week Number (In Context): <b>{{ week_list[2] }}</b></p>
+                        {% endif %}
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        {% if runsum_drivingOther != [] %}
+                        <p>Work Hours Running Sum: <b>{{ runsum_drivingOther[0] }}</b></p>
+                        <p>Work Hours Week Average: <b>{{ runsum_drivingOther[1] }}</b></p>
+                        {% endif %}
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        {% if runsum_totalHours != [] %}
+                        <p>Total Hours Running Sum: <b>{{ runsum_totalHours[0] }}</b></p>
+                        <p>Total Hours Week Average: <b>{{ runsum_totalHours[1] }}</b></p>
+                        {% endif %}
+                    </div>
+
+                </div>
+
 
             </div>
         </div>
