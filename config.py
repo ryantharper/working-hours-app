@@ -7,7 +7,7 @@ load_dotenv(os.path.join(basedir, '.env'))
 
 # stores all config terms
 class Config(object):
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'lucky19'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'XXX'
 
     # takes location of apps database, providing fallback when environ does not define the variable
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
